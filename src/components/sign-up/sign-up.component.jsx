@@ -34,7 +34,7 @@ export const SignUp = () => {
     }
 
     try {
-      dispatch(signUpStart({ email, displayName, password }));
+      dispatch(signUpStart(email, displayName, password));
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') alert('In use');
@@ -48,6 +48,8 @@ export const SignUp = () => {
     <SignUpContainer>
       <h2>Sign up</h2>
       <form onSubmit={handleSubmit}>
+        <button type="submit">Sign up test</button>
+
         <InputContainer>
           <label htmlFor="email">Email</label>
           <input
@@ -60,7 +62,6 @@ export const SignUp = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="displayName">Display Name </label>
-
           <input
             type="text"
             name="displayName"
@@ -71,7 +72,6 @@ export const SignUp = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="fullName">Full name </label>
-
           <input
             type="text"
             name="fullName"
@@ -82,7 +82,6 @@ export const SignUp = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="password">Enter password </label>
-
           <input
             type="password"
             name="password"
@@ -93,7 +92,6 @@ export const SignUp = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="repeatPassword">Repeat password </label>
-
           <input
             type="password"
             name="repeatPassword"
@@ -102,7 +100,6 @@ export const SignUp = () => {
             autoComplete={repeatPassword}
           />
         </InputContainer>
-        <button type="submit">Sign up test</button>
       </form>
     </SignUpContainer>
   );

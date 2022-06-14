@@ -1,4 +1,7 @@
-import { makeUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
+import {
+  makeUserDocumentFromAuth,
+  makeAuthUserWithEmailAndPassword,
+} from '../../utils/firebase/firebase.utils';
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import {
   signInFailed,
@@ -15,7 +18,6 @@ export function* getSnapshotFromUserAuth(userAuthObj, additionalInformation) {
       userAuthObj,
       additionalInformation
     );
-
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailed(error));
@@ -24,13 +26,17 @@ export function* getSnapshotFromUserAuth(userAuthObj, additionalInformation) {
 
 export function* signUp({ payload: { email, password, displayName } }) {
   try {
-    const { user } = yield call(makeUserDocumentFromAuth, {
+    const { user } = yield call(
+      makeAuthUserWithEmailAndPassword,
       email,
-      password,
-    });
-    console.log('user from gen func:', user);
+      password
+    );
+
     yield put(signUpSuccess(user, { displayName }));
   } catch (error) {
+    console.log(
+      'signUp func error - no saga take over looks like - straight action dispatch'
+    );
     yield put(signUpFailed(error));
   }
 }
@@ -41,10 +47,16 @@ export function* signInAfterSignUp({
   yield call(getSnapshotFromUserAuth, user, additionalInformation);
 }
 
+// watcher functions
+// where is the payload for 'signUp' coming from - stackoverflow says the payload is passed atuomatically
 export function* onSignUpStart() {
   yield takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp);
 }
 
+export function* onSignUpSuccess() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_SUCCESS, signInAfterSignUp);
+}
+
 export function* userSagas() {
-  yield all([call(onSignUpStart)]);
+  yield all([call(onSignUpStart), call(onSignUpSuccess)]);
 }

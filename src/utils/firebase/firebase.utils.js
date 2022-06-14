@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithRedirect } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 import { getAnalytics } from 'firebase/analytics';
-import { async } from '@firebase/util';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,6 +26,9 @@ const app = initializeApp(firebaseConfig);
 // analytics
 const analytics = getAnalytics(app);
 
+// Authentication
+export const auth = getAuth();
+
 // firestore
 export const db = getFirestore(app);
 
@@ -36,7 +38,7 @@ export const makeUserDocumentFromAuth = async (
 ) => {
   if (!userAuthObj) return;
 
-  const userDocRef = doc(db, 'users', userAuthObj.id);
+  const userDocRef = doc(db, 'users', userAuthObj.uid);
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
@@ -44,15 +46,20 @@ export const makeUserDocumentFromAuth = async (
     const madeAt = new Date();
 
     try {
-      await setDoc({
+      await setDoc(userDocRef, {
         displayName,
         email,
         madeAt,
         ...additionalInformation,
       });
     } catch (error) {
-      console.log('error', error.message);
+      console.log('makeUserDocumentFromAuth error', error.message);
     }
   }
   return userSnapshot;
+};
+
+export const makeAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
