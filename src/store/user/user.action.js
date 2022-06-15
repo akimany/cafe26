@@ -21,3 +21,6 @@ export const signInSuccess = (user) =>
 
 export const signInFailed = (error) =>
   makeAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
+
+export const emailSignInStart = (email, password) =>
+  makeAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password });
