@@ -24,3 +24,11 @@ export const signInFailed = (error) =>
 
 export const emailSignInStart = (email, password) =>
   makeAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password });
+
+export const signOutStart = () => makeAction(USER_ACTION_TYPES.SIGN_OUT_START);
+
+export const signOutSuccess = () =>
+  makeAction(USER_ACTION_TYPES.SIGN_OUT_SUCCESS);
+
+export const signOutFailed = (error) =>
+  makeAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error);

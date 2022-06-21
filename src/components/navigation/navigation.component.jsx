@@ -7,17 +7,28 @@ import {
 } from './navigation.styles';
 
 import './navigation.styles';
-
-// to
-const currentUser = false;
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutStart } from '../../store/user/user.action';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { useEffect } from 'react';
 
 export const Navigation = () => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+  const signOutUser = () => dispatch(signOutStart());
+
+  useEffect(() => {
+    console.log(currentUser);
+  });
+
   return (
     <Container>
       <NavContainer>
         <NavLink to={'/'}>Home</NavLink>
         {currentUser ? (
-          <NavLink as="span">SIGN OUT</NavLink>
+          <NavLink as="span" onClick={signOutUser}>
+            SIGN OUT
+          </NavLink>
         ) : (
           <NavLink to={'/auth'}>Sign in/up</NavLink>
         )}

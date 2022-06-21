@@ -2,11 +2,14 @@ import {
   makeUserDocumentFromAuth,
   makeAuthUserWithEmailAndPassword,
   signInAuthUserWithEmailAndPassword,
+  signOutUser,
 } from '../../utils/firebase/firebase.utils';
 import { call, put, all, takeLatest } from 'redux-saga/effects';
 import {
   signInFailed,
   signInSuccess,
+  signOutFailed,
+  signOutSuccess,
   signUpFailed,
   signUpSuccess,
 } from './user.action';
@@ -48,7 +51,6 @@ export function* signInAfterSignUp({
   yield call(getSnapshotFromUserAuth, user, additionalInformation);
 }
 
-// Sign in with email
 export function* signInWithEmail({ payload: { email, password } }) {
   try {
     const { user } = yield call(
@@ -62,8 +64,16 @@ export function* signInWithEmail({ payload: { email, password } }) {
   }
 }
 
+export function* signOut() {
+  try {
+    yield call(signOutUser);
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailed(error));
+  }
+}
+
 // watcher functions
-// where is the payload for 'signUp' coming from - stackoverflow says the payload is passed atuomatically
 export function* onSignUpStart() {
   yield takeLatest(USER_ACTION_TYPES.SIGN_UP_START, signUp);
 }
@@ -76,6 +86,15 @@ export function* onEmailSignUpStart() {
   yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInWithEmail);
 }
 
+export function* onSignOutStart() {
+  yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_START, signOut);
+}
+
 export function* userSagas() {
-  yield all([call(onSignUpStart), call(onSignUpSuccess)]);
+  yield all([
+    call(onSignUpStart),
+    call(onSignUpSuccess),
+    call(onEmailSignUpStart),
+    call(onSignOutStart),
+  ]);
 }

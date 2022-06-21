@@ -4,8 +4,8 @@ import { emailSignInStart } from '../../store/user/user.action';
 import { InputContainer, SignInContainer } from './sign-in.styles';
 
 const defaultFormValues = {
-  email: '',
-  password: '',
+  email: 'akimany@yahoo.co.uk',
+  password: '112233',
 };
 export const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormValues);
@@ -23,7 +23,6 @@ export const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
@@ -57,7 +56,6 @@ export const SignIn = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="password">Enter password </label>
-
           <input
             type="password"
             name="password"
