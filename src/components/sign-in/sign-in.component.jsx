@@ -29,7 +29,7 @@ export const SignIn = () => {
     } catch (error) {
       switch (error.code) {
         case 'auth/wrong-password':
-          alert('wrong password');
+          alert('wrong password', password);
           break;
         case 'auth/user-not-found':
           alert('user not found');
@@ -43,7 +43,7 @@ export const SignIn = () => {
   return (
     <SignInContainer>
       <h2>Sign in</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <InputContainer>
           <label htmlFor="email">Email</label>
           <input
@@ -64,9 +64,7 @@ export const SignIn = () => {
             autoComplete={password}
           />
         </InputContainer>
-        <button type="submit" onSubmit={handleSubmit}>
-          Sign in
-        </button>
+        <button type="submit">Sign in</button>
       </form>
     </SignInContainer>
   );

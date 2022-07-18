@@ -7,6 +7,8 @@ import Home from './routes/home/home.component';
 import './App.css';
 
 export const App = () => {
+  // TODO: properly centre align the main content
+
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
