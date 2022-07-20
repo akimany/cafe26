@@ -4,17 +4,15 @@ import { Section } from './section/section.compnent';
 
 export const CMS = () => {
   const [toggleSection, setToggleSection] = useState({ isopen: false });
-
-  const addSection = () =>
-    setToggleSection((state) => {
-      return { isopen: !state.isopen };
-    });
+  const handleClick = () => setToggleSection({ isopen: true });
 
   return (
     <div>
       <h1>CMS</h1>
-      {toggleSection.isopen && <Section toggle />}
-      <button onClick={addSection}>Add Section</button>
+      {toggleSection.isopen && (
+        <Section getter={toggleSection} setter={setToggleSection} />
+      )}
+      <button onClick={handleClick}>Add Section</button>
     </div>
   );
 };
