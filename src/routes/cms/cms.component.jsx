@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './cms.styles';
-import { Section } from './section/section.compnent';
+import { Section } from './section/section.component';
 
 export const CMS = () => {
   const [toggleSection, setToggleSection] = useState([]);
