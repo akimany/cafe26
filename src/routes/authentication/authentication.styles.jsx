@@ -9,6 +9,5 @@ export const AuthenticationContainer = styled.div`
   h1 {
     width: 100%;
     text-align: center;
-    border: 1px solid rebeccapurple;
   }
 `;

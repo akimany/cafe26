@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Container, NavContainer, NavLink } from './navigation.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';

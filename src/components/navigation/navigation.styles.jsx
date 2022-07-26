@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const LogoContainer = styled(Link)``;
 
 export const Container = styled.div`
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-flow: wrap;
