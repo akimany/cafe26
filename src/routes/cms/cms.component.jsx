@@ -1,48 +1,41 @@
 import { useState } from 'react';
 import './cms.styles';
 import { CMSContainer } from './cms.styles';
-import { SectionComp } from './section/section.component';
+import { SectionComponent } from './section/section.component';
 
-const sections = [
-  // {
-  //   sectionTitle: '',
-  //   sectionFoods: [
-  //     {
-  //       food: '',
-  //       price: '',
-  //     },
-  //   ],
-  // },
-];
+// const sections = [
+//   // {
+//   //   sectionTitle: '',
+//   //   sectionFoods: [
+//   //     {
+//   //       food: '',
+//   //       price: '',
+//   //     },
+//   //   ],
+//   // },
+// ];
 
 export const CMS = () => {
-  const [toggleSection, setToggleSection] = useState([]);
+  const [toggleThisSection, setToggleThisSection] = useState([]);
 
-  const handleClick = () => {
-    sections.push({
-      sectionTitle: '',
-      sectionFoods: [],
-    });
-    setToggleSection((state) => [
+  const handleAddSection = () => {
+    setToggleThisSection((state) => [
       ...state,
       { isOpen: true, id: Math.random() },
     ]);
   };
-  // TODO: onClick add section to 'sections' array.
 
   return (
     <CMSContainer>
       <h1>CMS</h1>
-      <button onClick={handleClick}>Add Section</button>
-      {toggleSection.length > 0 &&
-        toggleSection.map((section) => (
-          <SectionComp
-            getter={toggleSection}
-            setter={setToggleSection}
+      <button onClick={handleAddSection}>Add Section</button>
+      {toggleThisSection.length > 0 &&
+        toggleThisSection.map((section) => (
+          <SectionComponent
+            toggleThisSection={toggleThisSection}
+            setToggleThisSection={setToggleThisSection}
             id={section.id}
             key={section.id}
-            sections={sections}
-            style={{ width: '100%', border: '10px solid red' }}
           />
         ))}
     </CMSContainer>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signUpAction, signUpStart } from '../../store/user/user.action';
+import { signUpStart } from '../../store/user/user.action';
 import { InputContainer, SignUpContainer } from './sign-up.styles';
 
 const defaultFormValues = {

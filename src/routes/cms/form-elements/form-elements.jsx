@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import './items.styles';
+import './form-elements.styles';
 
 const addFood = () => {
   //
 };
 
-export const Items = () => {
+export const FormElements = () => {
   const [food, setFood] = useState([]);
 
   return (
